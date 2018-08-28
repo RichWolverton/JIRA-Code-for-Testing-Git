@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2017-03-10T14:01:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JIRA_Groups_sub" pageWidth="140" pageHeight="140" columnWidth="140" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cd2f9f1d-c09a-4410-b112-182628012ebf">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JIRA Prod"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="userID" class="java.math.BigDecimal">
+		<parameterDescription><![CDATA[User ID]]></parameterDescription>
+		<defaultValueExpression><![CDATA[10500]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select *
+from cwd_membership
+where child_id =  $P{userID} 
+order by  parent_name]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="PARENT_ID" class="java.math.BigDecimal"/>
+	<field name="CHILD_ID" class="java.math.BigDecimal"/>
+	<field name="MEMBERSHIP_TYPE" class="java.lang.String"/>
+	<field name="GROUP_TYPE" class="java.lang.String"/>
+	<field name="PARENT_NAME" class="java.lang.String"/>
+	<field name="LOWER_PARENT_NAME" class="java.lang.String"/>
+	<field name="CHILD_NAME" class="java.lang.String"/>
+	<field name="LOWER_CHILD_NAME" class="java.lang.String"/>
+	<field name="DIRECTORY_ID" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="140" height="14" backcolor="#EDF0FF" uuid="1d8d4b96-c7e2-424b-848b-28d161618b45">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Groups"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="140" height="14" uuid="318cd65a-9ded-4763-8101-1ca936881019">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textFieldExpression><![CDATA[$F{PARENT_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>

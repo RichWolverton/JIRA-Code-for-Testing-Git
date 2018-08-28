@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2017-02-13T15:23:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JIRA Login details sub" pageWidth="320" pageHeight="396" orientation="Landscape" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aab09e97-224f-4356-a8ea-e8901093bbee">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JIRA Prod"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="userID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[10100]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select attribute_name,
+           attribute_value,
+            to_number(trim (trailing ' ' from attribute_value)) as dateTimeInt,        
+            to_timestamp('1970-01-01', 'yyyy-mm-dd tzr')+ numtodsinterval(to_number(trim (trailing ' ' from attribute_value))/1000,'second') as dateTimestamp 
+             
+from cwd_user_attributes cua
+where cua.user_id =   $P{userID} 
+
+          and attribute_name in ('lastAuthenticated','login.lastLoginMillis','passwordLastChanged')]]>
+	</queryString>
+	<field name="ATTRIBUTE_NAME" class="java.lang.String"/>
+	<field name="ATTRIBUTE_VALUE" class="java.lang.String"/>
+	<field name="DATETIMEINT" class="java.math.BigDecimal"/>
+	<field name="DATETIMESTAMP" class="oracle.sql.TIMESTAMP"/>
+	<variable name="LoginCount" class="java.lang.String">
+		<variableExpression><![CDATA[($F{ATTRIBUTE_NAME}.equals( "login.count" ) ) ? $F{ATTRIBUTE_VALUE} : $V{LoginCount}]]></variableExpression>
+	</variable>
+	<variable name="LoginCurrentFailed" class="java.lang.String">
+		<variableExpression><![CDATA[($F{ATTRIBUTE_NAME}.equals( "login.currentFailedCount" ) ) ? $F{ATTRIBUTE_VALUE} : $V{LoginCurrentFailed}]]></variableExpression>
+	</variable>
+	<variable name="LoginTotalFailed" class="java.lang.String">
+		<variableExpression><![CDATA[($F{ATTRIBUTE_NAME}.equals( "login.totalFailedCount" ) ) ? $F{ATTRIBUTE_VALUE} :$V{LoginTotalFailed}]]></variableExpression>
+	</variable>
+	<variable name="LastLogin" class="java.lang.String">
+		<variableExpression><![CDATA[$F{ATTRIBUTE_NAME}.equals( "lastAuthenticated" ) ? $F{ATTRIBUTE_VALUE} : $V{LastLogin}]]></variableExpression>
+	</variable>
+	<variable name="LastLoginInteger" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{ATTRIBUTE_NAME}.equals( "lastAuthenticated" ) ? $F{DATETIMEINT} : $V{LastLoginInteger}]]></variableExpression>
+	</variable>
+	<variable name="Debug" class="java.lang.Boolean">
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="ATTRIBUTE_NAME">
+		<groupExpression><![CDATA[$F{ATTRIBUTE_NAME}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$V{Debug}]]></printWhenExpression>
+			<textField>
+				<reportElement x="150" y="0" width="170" height="14" uuid="d37d5c44-88aa-42df-950c-5d613ac017b1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ATTRIBUTE_VALUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="150" height="14" uuid="992855cc-9998-4578-bd82-45e2b8b9925a">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ATTRIBUTE_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="44" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="28" width="150" height="14" uuid="2c356ba1-ca0d-456e-ab35-eae2820bbb19">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Last Login Date"]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM d, yyyy h:mm:ss a">
+				<reportElement x="150" y="28" width="170" height="14" uuid="e0435008-fd0f-4056-8858-075a11e7aae7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DATETIMESTAMP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="150" height="14" uuid="cebbdd0b-00e7-4f51-a650-2003a2fe30aa">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Last Login String"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="170" height="14" uuid="24706f43-5b2f-488d-9339-28cb5e74c32f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$V{LastLogin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="14" width="150" height="14" uuid="7eab1071-4db4-4977-a9d5-cd0605603851">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Last Login Integer"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="14" width="170" height="14" uuid="1e27896b-9117-45cd-be09-98118a27f04d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$V{LastLoginInteger}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>

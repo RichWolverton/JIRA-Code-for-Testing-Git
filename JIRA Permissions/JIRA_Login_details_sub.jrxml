@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2017-03-15T10:49:56 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JIRA Login details sub" columnCount="2" pageWidth="140" pageHeight="14" orientation="Landscape" columnWidth="70" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aab09e97-224f-4356-a8ea-e8901093bbee">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JIRA Prod"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="userID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[10100]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select * 
+from cwd_user_attributes cua
+where cua.user_id =  $P{userID} 
+and cua.attribute_name in ('login.currentFailedCount','login.count')]]>
+	</queryString>
+	<field name="ATTRIBUTE_NAME" class="java.lang.String"/>
+	<field name="ATTRIBUTE_VALUE" class="java.lang.String"/>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="USER_ID" class="java.math.BigDecimal"/>
+	<field name="DIRECTORY_ID" class="java.math.BigDecimal"/>
+	<field name="LOWER_ATTRIBUTE_VALUE" class="java.lang.String"/>
+	<variable name="AttributeName" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[$F{ATTRIBUTE_NAME}.substring( 8, 9 ) == ("r") 
+     ? "Count: "+$F{ATTRIBUTE_VALUE} 
+     : "Failed: "+$F{ATTRIBUTE_VALUE}]]></variableExpression>
+	</variable>
+	<variable name="NoLogin" class="java.lang.String">
+		<variableExpression><![CDATA[$F{ATTRIBUTE_NAME}.substring( 8, 9 )]]></variableExpression>
+	</variable>
+	<variable name="Failed" class="java.lang.String">
+		<variableExpression><![CDATA["Failed: " + $F{ATTRIBUTE_VALUE}]]></variableExpression>
+	</variable>
+	<variable name="Logins" class="java.lang.String">
+		<variableExpression><![CDATA["Logins: " + $F{ATTRIBUTE_VALUE}]]></variableExpression>
+	</variable>
+	<group name="ATTRIBUTE_NAME">
+		<groupExpression><![CDATA[$F{ATTRIBUTE_NAME}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="14" uuid="ee8caa5b-e9f1-43c6-87c3-490cee272d01">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[($F{ATTRIBUTE_NAME}.substring( 6, 9 )).equals("cur")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{Failed}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="14" uuid="5ed22d97-4f31-42db-8078-bdaaf6f0fb03">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[($F{ATTRIBUTE_NAME}.substring( 6, 9 )).equals("cou")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{Logins}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>

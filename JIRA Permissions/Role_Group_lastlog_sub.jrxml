@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2018-01-31T10:39:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Role_Group_sub" pageWidth="320" pageHeight="100" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1e6efe42-0582-40f8-aa31-146440b4c5d9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JIRA Prod"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="Project" class="java.lang.String">
+		<parameterDescription><![CDATA[Project Name]]></parameterDescription>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT p.pname as Project,
+              pr.NAME as Role, 
+              pra.roletype, 
+              pra.roletypeparameter, 
+              cmem.child_name, 
+              u.display_name,
+              u.id,
+              u.active,
+              cua.attribute_value
+FROM projectroleactor pra
+INNER JOIN projectrole pr ON pr.ID = pra.PROJECTROLEID
+INNER JOIN project p ON p.ID = pra.PID
+INNER JOIN cwd_membership cmem ON parent_name=pra.roletypeparameter
+INNER JOIN app_user au ON au.lower_user_name = cmem.child_name
+INNER JOIN cwd_user u ON u.user_name = au.user_key
+left join cwd_user_attributes cua
+on cua.user_id = u.id and cua.attribute_name = 'login.lastLoginMillis'
+WHERE pra.roletype = 'atlassian-group-role-actor' 
+              and p.pname  = $P{Project} 
+ 
+order by pr.name, pra.roletypeparameter, p.pname, u.display_name]]>
+	</queryString>
+	<field name="ROLETYPE" class="java.lang.String"/>
+	<field name="ROLETYPEPARAMETER" class="java.lang.String"/>
+	<field name="DISPLAY_NAME" class="java.lang.String"/>
+	<field name="CHILD_NAME" class="java.lang.String"/>
+	<field name="PROJECT" class="java.lang.String"/>
+	<field name="ROLE" class="java.lang.String"/>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="ATTRIBUTE_VALUE" class="java.lang.String"/>
+	<field name="ACTIVE" class="java.math.BigDecimal"/>
+	<group name="Role" isReprintHeaderOnEachPage="true" minHeightToStartNewPage="28">
+		<groupExpression><![CDATA[$F{ROLE}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="320" height="14" backcolor="#ACFCD5" uuid="4991e711-ec09-4b1f-a199-fb856b69c59a">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{ROLE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="JIRAGroup">
+		<groupExpression><![CDATA[$F{ROLETYPEPARAMETER}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="320" height="14" backcolor="#FCB9B8" uuid="755280c2-74eb-446e-a643-00f84b68cf12">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA["     Group " + $F{ROLETYPEPARAMETER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="320" height="14" forecolor="#FFFF4D" backcolor="#FFFF4D" uuid="a1bad300-ae70-46de-896d-7f6d7e65679d">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ACTIVE}.equals( new java.math.BigDecimal(0) )]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement positionType="Float" x="10" y="0" width="160" height="14" uuid="3939f5b0-543d-4f18-bae7-c40fd68fa442">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DISPLAY_NAME}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="170" y="0" width="150" height="14" uuid="6aa672ae-a85d-46df-85ec-0e7336781123">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="userID">
+					<subreportParameterExpression><![CDATA[$F{ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["JIRA_LastLogin2_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>
