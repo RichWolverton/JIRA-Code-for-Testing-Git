@@ -23,7 +23,7 @@ left join cwd_membership grp
 on grp.parent_name = r.roletypeparameter
 inner join cwd_user u
 on u.user_name = grp.child_name
-where p.pkey like 'ONE%'
+where p.pkey like 'Digital %'
 order by p.pname, pr.name, r.roletype, r.roletypeparameter, u.user_name]]>
 	</queryString>
 	<field name="pname" class="java.lang.String"/>
