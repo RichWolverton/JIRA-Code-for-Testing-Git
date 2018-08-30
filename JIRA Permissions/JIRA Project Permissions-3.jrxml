@@ -18,7 +18,7 @@ INNER JOIN project p ON p.ID = pra.PID
 INNER JOIN cwd_membership cmem ON parent_name=pra.roletypeparameter --and pra.roletype ='atlassian-user-role-actor'
 INNER JOIN app_user au ON au.lower_user_name = cmem.child_name
 INNER JOIN cwd_user u ON u.user_name = au.user_key
-WHERE p.pname like 'One%'  --and pra.roletype ='atlassian-user-role-actor'
+WHERE p.pname like 'Digital %'  --and pra.roletype ='atlassian-user-role-actor'
 order by p.pname, pr.name, u.display_name]]>
 	</queryString>
 	<field name="project" class="java.lang.String"/>
